@@ -49,8 +49,8 @@ print_m(qmatrix *m)
 	{
         	printf("|");
         	for (int j = 0; j < m->c; j++)
-            		printf(" %lld ", m->m[i][j]);
-        	printf("|\n");
+            		printf(" %lld \t", m->m[i][j]);
+        	printf("\t|\n");
     	}
 }
 
@@ -65,9 +65,16 @@ fill_m_with(qmatrix *m, double n)
 void
 fill_m_with_c(qmatrix *m)
 {
+	int n = 1;
+
 	for(int i = 0 ; i < m->l ; i++)
+	{
 		for(int j = 0 ; j < m->c ; j++)
-			m->m[i][j] = j;
+		{
+			m->m[i][j] = n;
+			n++;
+		}
+	}
 }
 
 qmatrix *

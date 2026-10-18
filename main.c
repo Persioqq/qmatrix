@@ -1,4 +1,4 @@
-#include "qqmatrix.h"
+#include "qmatrix.h"
 	
 int
 main(void)

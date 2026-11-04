@@ -77,12 +77,27 @@ fill_m_with_c(qmatrix *m)
 	}
 }
 
+void
+fill_m_with_d(qmatrix *m)
+{
+	int n = m->l * m->c;
+
+	for(int i = 0 ; i < m->l ; i++)
+	{
+		for(int j = 0 ; j < m->c ; j++)
+		{
+			m->m[i][j] = n;
+			n--;
+		}
+	}
+}
+
 qmatrix *
 add_m(qmatrix *m1, qmatrix *m2)
 {
-	if(m1->l != m2->l && m1->c != m2->c)
+	if(m1->l != m2->l || m1->c != m2->c)
 	{
-		printf("wrong qmatrix size\n");
+		fprintf(stderr, "wrong qmatrix size\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -98,9 +113,9 @@ add_m(qmatrix *m1, qmatrix *m2)
 qmatrix *
 sub_m(qmatrix *m1, qmatrix *m2)
 {
-	if(m1->l != m2->l && m1->c != m2->c)
+	if(m1->l != m2->l || m1->c != m2->c)
 	{
-		printf("wrong qmatrix size\n");
+		fprintf(stderr, "wrong matrix size\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -116,9 +131,9 @@ sub_m(qmatrix *m1, qmatrix *m2)
 qmatrix *
 mul_m(qmatrix *m1, qmatrix *m2)
 {
-	if(m1->l != m2->c)
+	if(m1->c != m2->l)
 	{
-		printf("wrong qmatrix size\n");
+		fprintf(stderr, "wrong matrix size\n");
 		exit(EXIT_FAILURE);
 	}
 

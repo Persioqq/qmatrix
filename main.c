@@ -12,7 +12,7 @@ main(void)
 
 	qmatrix *m2 = new_m(10, 10);
 	print_m(m2);
-	fill_m_with_c(m2);
+	fill_m_with_d(m2);
 	print_m(m2);
 
 	qmatrix *res = mul_m(m1, m2);

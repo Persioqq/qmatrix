@@ -110,12 +110,12 @@ impl QMatrix {
         res
     }
 
-    pub fn pow(&self, n: f64) -> QMatrix {
+    pub fn pow(&self, n: i64) -> QMatrix {
         let mut res = QMatrix::new(self.l, self.c);
 
         for i in 0..self.l {
             for j in 0..self.c {
-                res.m[i][j] = (self.m[i][j] as f64).powf(n) as i64;
+                res.m[i][j] = (self.m[i][j] as f64).powf(n as f64) as i64;
             }
         }
 

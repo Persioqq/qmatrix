@@ -22,6 +22,6 @@ fn main() {
     let res = res.sub(&m2);
     res.print();
 
-    let res = res.pow(2.0);
+    let res = res.pow(2);
     res.print();
 }

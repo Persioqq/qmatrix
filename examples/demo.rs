@@ -1,27 +1,27 @@
-use qmatrix::*;
+use qmatrix::QMatrix;
 
 fn main() {
     println!("Persioqq");
 
-    let mut m1 = new_m(10, 10);
-    print_m(&m1);
-    fill_m_with_c(&mut m1);
-    print_m(&m1);
+    let mut m1 = QMatrix::new(10, 10);
+    m1.print();
+    m1.fill_with_c();
+    m1.print();
 
-    let mut m2 = new_m(10, 10);
-    print_m(&m2);
-    fill_m_with_d(&mut m2);
-    print_m(&m2);
+    let mut m2 = QMatrix::new(10, 10);
+    m2.print();
+    m2.fill_with_d();
+    m2.print();
 
-    let res = mul_m(&m1, &m2);
-    print_m(&res);
+    let res = m1.mul(&m2);
+    res.print();
 
-    let res = add_m(&res, &m1);
-    print_m(&res);
+    let res = res.add(&m1);
+    res.print();
 
-    let res = sub_m(&res, &m2);
-    print_m(&res);
+    let res = res.sub(&m2);
+    res.print();
 
-    let res = pow_m(&res, 2.0);
-    print_m(&res);
+    let res = res.pow(2.0);
+    res.print();
 }

@@ -1,124 +1,124 @@
-
 use std::process::exit;
- 
+
 pub struct QMatrix {
     pub l: usize,
     pub c: usize,
     pub m: Vec<Vec<i64>>,
 }
- 
-pub fn new_m(l: usize, c: usize) -> QMatrix {
-    QMatrix {
-        l,
-        c,
-        m: vec![vec![0; c]; l],
-    }
-}
- 
-pub fn print_m(m: &QMatrix) {
-    print!("\n{}x{} qmatrix:\n\n", m.l, m.c);
- 
-    for i in 0..m.l {
-        print!("|");
-        for j in 0..m.c {
-            print!(" {} \t", m.m[i][j]);
-        }
-        print!("\t|\n");
-    }
-}
- 
-pub fn fill_m_with(m: &mut QMatrix, n: i64) {
-    for i in 0..m.l {
-        for j in 0..m.c {
-            m.m[i][j] = n;
-        }
-    }
-}
- 
-pub fn fill_m_with_c(m: &mut QMatrix) {
-    let mut n = 1;
- 
-    for i in 0..m.l {
-        for j in 0..m.c {
-            m.m[i][j] = n;
-            n += 1;
-        }
-    }
-}
 
-pub fn fill_m_with_d(m: &mut QMatrix) {
-    let mut n: i64 = (m.l * m.c).try_into().unwrap();
- 
-    for i in 0..m.l {
-        for j in 0..m.c {
-            m.m[i][j] = n;
-            n -= 1;
+impl QMatrix {
+    pub fn new(l: usize, c: usize) -> Self {
+        QMatrix {
+            l,
+            c,
+            m: vec![vec![0; c]; l],
         }
     }
-}
 
-pub fn add_m(m1: &QMatrix, m2: &QMatrix) -> QMatrix {
-    if m1.l != m2.l || m1.c != m2.c {
-        println!("wrong qmatrix size");
-        exit(1);
-    }
- 
-    let mut res = new_m(m1.l, m1.c);
- 
-    for i in 0..m1.l {
-        for j in 0..m1.c {
-            res.m[i][j] = m1.m[i][j] + m2.m[i][j];
+    pub fn print(&self) {
+        print!("\n{}x{} qmatrix:\n\n", self.l, self.c);
+
+        for i in 0..self.l {
+            print!("|");
+            for j in 0..self.c {
+                print!(" {} \t", self.m[i][j]);
+            }
+            print!("\t|\n");
         }
     }
- 
-    res
-}
- 
-pub fn sub_m(m1: &QMatrix, m2: &QMatrix) -> QMatrix {
-    if m1.l != m2.l || m1.c != m2.c {
-        println!("wrong qmatrix size");
-        exit(1);
-    }
- 
-    let mut res = new_m(m1.l, m1.c);
- 
-    for i in 0..m1.l {
-        for j in 0..m1.c {
-            res.m[i][j] = m1.m[i][j] - m2.m[i][j];
-        }
-    }
- 
-    res
-}
- 
-pub fn mul_m(m1: &QMatrix, m2: &QMatrix) -> QMatrix {
-    if m1.c != m2.l {
-        println!("wrong qmatrix size");
-        exit(1);
-    }
- 
-    let mut res = new_m(m1.l, m2.c);
- 
-    for i in 0..m1.l {
-        for j in 0..m2.c {
-            for k in 0..m2.l {
-                res.m[i][j] += m1.m[i][k] * m2.m[k][j];
+
+    pub fn fill_with(&mut self, n: i64) {
+        for i in 0..self.l {
+            for j in 0..self.c {
+                self.m[i][j] = n;
             }
         }
     }
- 
-    res
-}
- 
-pub fn pow_m(m: &QMatrix, n: f64) -> QMatrix {
-    let mut res = new_m(m.l, m.c);
- 
-    for i in 0..m.l {
-        for j in 0..m.c {
-            res.m[i][j] = (m.m[i][j] as f64).powf(n) as i64;
+
+    pub fn fill_with_c(&mut self) {
+        let mut n = 1;
+
+        for i in 0..self.l {
+            for j in 0..self.c {
+                self.m[i][j] = n;
+                n += 1;
+            }
         }
     }
- 
-    res
-}
 
+    pub fn fill_with_d(&mut self) {
+        let mut n: i64 = (self.l * self.c).try_into().unwrap();
+
+        for i in 0..self.l {
+            for j in 0..self.c {
+                self.m[i][j] = n;
+                n -= 1;
+            }
+        }
+    }
+
+    pub fn add(&self, other: &QMatrix) -> QMatrix {
+        if self.l != other.l || self.c != other.c {
+            println!("wrong qmatrix size");
+            exit(1);
+        }
+
+        let mut res = QMatrix::new(self.l, self.c);
+
+        for i in 0..self.l {
+            for j in 0..self.c {
+                res.m[i][j] = self.m[i][j] + other.m[i][j];
+            }
+        }
+
+        res
+    }
+
+    pub fn sub(&self, other: &QMatrix) -> QMatrix {
+        if self.l != other.l || self.c != other.c {
+            println!("wrong qmatrix size");
+            exit(1);
+        }
+
+        let mut res = QMatrix::new(self.l, self.c);
+
+        for i in 0..self.l {
+            for j in 0..self.c {
+                res.m[i][j] = self.m[i][j] - other.m[i][j];
+            }
+        }
+
+        res
+    }
+
+    pub fn mul(&self, other: &QMatrix) -> QMatrix {
+        if self.c != other.l {
+            println!("wrong qmatrix size");
+            exit(1);
+        }
+
+        let mut res = QMatrix::new(self.l, other.c);
+
+        for i in 0..self.l {
+            for j in 0..other.c {
+                for k in 0..other.l {
+                    res.m[i][j] += self.m[i][k] * other.m[k][j];
+                }
+            }
+        }
+
+        res
+    }
+
+    pub fn pow(&self, n: f64) -> QMatrix {
+        let mut res = QMatrix::new(self.l, self.c);
+
+        for i in 0..self.l {
+            for j in 0..self.c {
+                res.m[i][j] = (self.m[i][j] as f64).powf(n) as i64;
+            }
+        }
+
+        res
+    }
+}
